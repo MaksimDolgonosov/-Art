@@ -1561,19 +1561,22 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var modal = function modal() {
+  var btnPressed = false;
+  var scroll = calcScroll();
+
   function bindModals(triggerSelector, modalSelector, closeSelector) {
-    var closeClickOverlay = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : true;
+    var destroy = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
     var trigger = document.querySelectorAll(triggerSelector);
     var modal = document.querySelector(".".concat(modalSelector));
     var close = modal.querySelector(".".concat(closeSelector));
     var allModals = document.querySelectorAll('[data-modal]');
-    var scroll = calcScroll();
     trigger.forEach(function (element) {
       if (element.target) {
         element.preventDefault();
       }
 
       element.addEventListener("click", function () {
+        btnPressed = true;
         allModals.forEach(function (item) {
           item.style.display = "none";
           document.body.style.overflow = "";
@@ -1581,6 +1584,10 @@ var modal = function modal() {
         modal.style.display = "block";
         document.body.style.overflow = "hidden";
         document.body.style.marginRight = "".concat(scroll, "px");
+
+        if (destroy) {
+          element.remove();
+        }
       });
     });
     close.addEventListener("click", function (e) {
@@ -1601,9 +1608,18 @@ var modal = function modal() {
 
   function showModalByTime(selector, time) {
     setTimeout(function () {
-      document.querySelector(".".concat(selector)).style.display = "block";
-      document.body.style.overflow = "hidden";
-      document.body.style.marginRight = "".concat(scroll, "px");
+      var ifAnyModalShow = false;
+      document.querySelectorAll('[data-modal]').forEach(function (element) {
+        if (window.getComputedStyle(element).display !== "none") {
+          ifAnyModalShow = true;
+        }
+      });
+
+      if (!ifAnyModalShow) {
+        document.querySelector(".".concat(selector)).style.display = "block";
+        document.body.style.overflow = "hidden";
+        document.body.style.marginRight = "".concat(scroll, "px");
+      }
     }, time);
   }
 
@@ -1619,9 +1635,18 @@ var modal = function modal() {
     return scrollWidth;
   }
 
+  function scrollToTheEnd() {
+    window.addEventListener("scroll", function () {
+      if (!btnPressed && window.pageYOffset + document.documentElement.clientHeight >= document.documentElement.scrollHeight) {
+        bindModals(".fixed-gift", "popup-gift", "popup-close", true); //document.querySelector(selector).click();
+      }
+    });
+  }
+
   bindModals(".button-design", "popup-design", "popup-close");
   bindModals(".button-consultation", "popup-consultation", "popup-close");
-  showModalByTime("popup-consultation", 60000);
+  bindModals(".fixed-gift", "popup-gift", "popup-close", true);
+  scrollToTheEnd(".fixed-gift"); //showModalByTime("popup-consultation", 5000);
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (modal);
