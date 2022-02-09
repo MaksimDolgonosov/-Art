@@ -20,6 +20,7 @@ const modal = () => {
                 allModals.forEach(item => {
                     item.style.display = "none";
                     document.body.style.overflow = "";
+                    item.classList.add("animated", "fadeInUp");
                 });
 
                 modal.style.display = "block";
@@ -79,12 +80,12 @@ const modal = () => {
         return scrollWidth;
     }
 
-    function scrollToTheEnd() {
+    function scrollToTheEnd(selector) {
         window.addEventListener("scroll", () => {
 
             if (!btnPressed && (window.pageYOffset + document.documentElement.clientHeight >= document.documentElement.scrollHeight)) {
-                bindModals(".fixed-gift", "popup-gift", "popup-close", true);
-                //document.querySelector(selector).click();
+
+                document.querySelector(selector).click();
             }
         });
     }
