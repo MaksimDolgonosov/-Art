@@ -46,26 +46,24 @@ const sliders = (slides, dir, prev, next) => {
     function activateAnimation() {
         if (dir === "vertical") {
             paused = setInterval(function () {
-
-                sliderPosition--;
+                sliderPosition++;
                 showSlider(sliderPosition);
                 allSlides[sliderPosition].classList.add("slideInDown");
             }, 3000);
         } else {
             paused = setInterval(function () {
-
-                sliderPosition--;
+                sliderPosition++;
                 showSlider(sliderPosition);
-                allSlides[sliderPosition].classList.remove("slideInLeft");
-                allSlides[sliderPosition].classList.add("slideInRight");
+                allSlides[sliderPosition].classList.remove("slideInRight");
+                allSlides[sliderPosition].classList.add("slideInLeft");
             }, 3000);
         }
     }
     activateAnimation();
-    allSlides[0].parentNode.addEventListener("mouseenter", () => {
+    allSlides[0].parentElement.addEventListener("mouseenter", () => {
         clearInterval(paused);
     });
-    allSlides[0].parentNode.addEventListener("mouseleave", () => {
+    allSlides[0].parentElement.addEventListener("mouseleave", () => {
         activateAnimation();
     });
 

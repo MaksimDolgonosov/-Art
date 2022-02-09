@@ -836,9 +836,13 @@ h4 {
 .feedback {
   background-color: #f7e7e6;
   padding: 9rem 0;
+
 }
+
+
 .feedback-slider-item {
   padding-bottom: 5rem;
+
 }
 .feedback-block {
   position: relative;
