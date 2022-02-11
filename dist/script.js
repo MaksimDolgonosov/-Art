@@ -3490,6 +3490,7 @@ window.addEventListener("DOMContentLoaded", function () {
   Object(_modules_modal__WEBPACK_IMPORTED_MODULE_0__["default"])();
   Object(_modules_sliders__WEBPACK_IMPORTED_MODULE_1__["default"])(".feedback-slider-item", "horizontal", ".main-prev-btn", ".main-next-btn");
   Object(_modules_sliders__WEBPACK_IMPORTED_MODULE_1__["default"])(".main-slider-item", "vertical");
+  Object(_modules_forms__WEBPACK_IMPORTED_MODULE_2__["default"])();
 });
 
 /***/ }),
@@ -3531,7 +3532,13 @@ var forms = function forms() {
     loading: "Идет отправка...",
     success: "Отправлено",
     failure: "Упс! что то пошло не так...",
-    spinner: "assets/img/spinner.gif"
+    spinner: "assets/img/spinner.gif",
+    successImage: "assets/img/ok.png",
+    failureImage: "assets/img/fail.png"
+  };
+  var path = {
+    designer: "assets/server.php",
+    question: "assets/question.php"
   };
   form.forEach(function (e) {
     bindPostData(e);
@@ -3543,22 +3550,21 @@ var forms = function forms() {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
-            document.querySelector(".status").textContent = message.loading;
-            _context.next = 3;
+            _context.next = 2;
             return regeneratorRuntime.awrap(fetch(url, {
               method: "POST",
               body: data
             }));
 
-          case 3:
+          case 2:
             res = _context.sent;
-            _context.next = 6;
+            _context.next = 5;
             return regeneratorRuntime.awrap(res.text());
 
-          case 6:
+          case 5:
             return _context.abrupt("return", _context.sent);
 
-          case 7:
+          case 6:
           case "end":
             return _context.stop();
         }
@@ -3573,44 +3579,45 @@ var forms = function forms() {
   }
 
   function bindPostData(form) {
-    form.addEventListener("submit", function (element) {
+    form.querySelector(".button-order").addEventListener("click", function (element) {
       element.preventDefault();
       var statusMessage = document.createElement("div");
-      statusMessage.classList.add("status"); //statusMessage.textContent = message.loading;
+      var statusImage = document.createElement("img");
+      form.classList.add("animated", "fadeOutUp");
+      form.style.display = "none"; // setTimeout(function () {
+      //     form.style.display = "none";
+      // }, 400);
 
-      form.append(statusMessage); //appendChild-?
+      statusMessage.textContent = message.loading;
+      statusImage.setAttribute("src", message.spinner);
+      form.parentElement.append(statusMessage); //appendChild-?
 
+      form.parentElement.append(statusImage);
       var formData = new FormData(form);
-
-      if (form.getAttribute("data-form") === "end") {
-        for (var key in state) {
-          formData.append(key, state[key]);
-        }
-      }
-
-      postData("assets/server.php", formData).then(function (data) {
+      var api;
+      form.closest(".popup-design") ? api = path.designer : api = path.question;
+      postData(api, formData).then(function (data) {
         console.log(data);
         statusMessage.textContent = message.success;
+        statusImage.setAttribute("src", message.successImage);
       }).catch(function () {
         statusMessage.textContent = message.failure;
+        statusImage.setAttribute("src", message.failureImage);
         console.log("Fail");
       }).finally(function () {
-        form.reset();
         clearInputs();
         setTimeout(function () {
           statusMessage.remove();
-        }, 3000);
+          statusImage.remove();
+          document.querySelectorAll("[data-modal]").forEach(function (modal) {
+            modal.style.display = "none";
+            document.body.style.overflow = ""; // form.classList.remove("fadeOutUp");
+            // form.classList.remove("fadInUp");
 
-        if (form.getAttribute("data-form") === "end") {
-          state = {};
-          setTimeout(function () {
-            document.querySelectorAll("[data-modal]").forEach(function (modal) {
-              modal.style.display = "none";
-              document.body.style.overflow = "";
-              form.reset();
-            });
-          }, 4000);
-        }
+            form.style.display = "block";
+            form.reset();
+          });
+        }, 3000);
       });
     });
   }

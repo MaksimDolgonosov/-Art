@@ -10,7 +10,13 @@ const forms = () => {
         loading: "Идет отправка...",
         success: "Отправлено",
         failure: "Упс! что то пошло не так...",
-        spinner: "assets/img/spinner.gif"
+        spinner: "assets/img/spinner.gif",
+        successImage: "assets/img/ok.png",
+        failureImage: "assets/img/fail.png"
+    };
+    const path = {
+        designer: "assets/server.php",
+        question: "assets/question.php"
     };
 
     form.forEach(e => {
@@ -18,7 +24,6 @@ const forms = () => {
     });
 
     const postData = async (url, data) => {
-        document.querySelector(".status").textContent = message.loading;
         const res = await fetch(url, {
             method: "POST",
             body: data
@@ -34,48 +39,49 @@ const forms = () => {
 
 
     function bindPostData(form) {
-        form.addEventListener("submit", element => {
+        form.querySelector(".button-order").addEventListener("click", element => {
             element.preventDefault();
             const statusMessage = document.createElement("div");
-            statusMessage.classList.add("status");
-            //statusMessage.textContent = message.loading;
-            form.append(statusMessage); //appendChild-?
+            const statusImage = document.createElement("img");
+            form.classList.add("animated", "fadeOutUp");
+            form.style.display = "none";
+            // setTimeout(function () {
+            //     form.style.display = "none";
+            // }, 400);
+            statusMessage.textContent = message.loading;
+            statusImage.setAttribute("src", message.spinner);
+            form.parentElement.append(statusMessage); //appendChild-?
+            form.parentElement.append(statusImage);
             const formData = new FormData(form);
-            if (form.getAttribute("data-form") === "end") {
-                for (let key in state) {
-                    formData.append(key, state[key]);
-                }
 
-            }
+            let api;
+            form.closest(".popup-design") ? api = path.designer : api = path.question;
 
-
-
-            postData("assets/server.php", formData)
+            postData(api, formData)
                 .then(data => {
                     console.log(data);
                     statusMessage.textContent = message.success;
+                    statusImage.setAttribute("src", message.successImage);
                 }).catch(() => {
                     statusMessage.textContent = message.failure;
+                    statusImage.setAttribute("src", message.failureImage);
                     console.log("Fail");
                 }).finally(() => {
-                    form.reset();
+
                     clearInputs();
                     setTimeout(() => {
                         statusMessage.remove();
+                        statusImage.remove();
+                        document.querySelectorAll("[data-modal]").forEach(modal => {
+                            modal.style.display = "none";
+                            document.body.style.overflow = "";
+                            // form.classList.remove("fadeOutUp");
+                            // form.classList.remove("fadInUp");
+                            form.style.display = "block";
+                            form.reset();
+                        });
                     }, 3000);
-                    if (form.getAttribute("data-form") === "end") {
-                        state = {};
-                        setTimeout(() => {
-                            document.querySelectorAll("[data-modal]").forEach(modal => {
-                                modal.style.display = "none";
-                                document.body.style.overflow = "";
-                                form.reset();
-                            });
-                        }, 4000);
 
-
-
-                    }
                 });
 
 
