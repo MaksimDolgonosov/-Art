@@ -43,11 +43,20 @@ const forms = () => {
             element.preventDefault();
             const statusMessage = document.createElement("div");
             const statusImage = document.createElement("img");
-            form.classList.add("animated", "fadeOutUp");
+            form.classList.add("animated", "fadeOutUp"); // что бы ушла вверх
             form.style.display = "none";
             // setTimeout(function () {
-            //     form.style.display = "none";
-            // }, 400);
+            //     form.style.display = "none";   
+            // }, 400);   //форма ушла вверх
+            statusMessage.style.cssText = `
+            display: block;
+            margin: 0 auto;
+            text-align: center;
+            `;
+            statusImage.style.cssText = `
+            display: block;
+            margin: 0 auto;
+            `;
             statusMessage.textContent = message.loading;
             statusImage.setAttribute("src", message.spinner);
             form.parentElement.append(statusMessage); //appendChild-?
@@ -55,11 +64,12 @@ const forms = () => {
             const formData = new FormData(form);
 
             let api;
-            form.closest(".popup-design") ? api = path.designer : api = path.question;
+            form.closest(".popup-design") || form.classList.contains("calc_form") ? api = path.designer : api = path.question;
 
             postData(api, formData)
                 .then(data => {
                     console.log(data);
+                    console.log(api);
                     statusMessage.textContent = message.success;
                     statusImage.setAttribute("src", message.successImage);
                 }).catch(() => {
@@ -72,14 +82,16 @@ const forms = () => {
                     setTimeout(() => {
                         statusMessage.remove();
                         statusImage.remove();
-                        document.querySelectorAll("[data-modal]").forEach(modal => {
-                            modal.style.display = "none";
-                            document.body.style.overflow = "";
-                            // form.classList.remove("fadeOutUp");
-                            // form.classList.remove("fadInUp");
-                            form.style.display = "block";
-                            form.reset();
-                        });
+                        form.reset();
+                        form.style.display = "block";
+                        // document.querySelectorAll("[data-modal]").forEach(modal => {
+                        //     modal.style.display = "none";
+                        //document.body.style.overflow = "";
+                        form.classList.remove("fadeOutUp");
+                        form.classList.add("fadeInUp");
+
+
+                        // });
                     }, 3000);
 
                 });
