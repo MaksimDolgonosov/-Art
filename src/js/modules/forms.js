@@ -1,10 +1,20 @@
 const forms = () => {
     const form = document.querySelectorAll("form");
     const inputs = document.querySelectorAll("input");
+    const upload = document.querySelectorAll("[name=upload]");
+
     // const inputForms = document.querySelectorAll("input[name='user_phone']");
 
     //checkNumInputs("input[name='user_phone']");
-
+    upload.forEach(item => {
+        item.addEventListener("input", () => {
+            console.log(item.files[0]);
+            let dots;
+            item.files[0].name.split(".")[0].length > 5 ? dots = "..." : dots = '.';
+            let name = item.files[0].name.split(".")[0].substring(0, 6) + dots + item.files[0].name.split(".")[1];
+            item.previousElementSibling.textContent = name;
+        });
+    });
 
     const message = {
         loading: "Идет отправка...",
@@ -34,6 +44,9 @@ const forms = () => {
     function clearInputs() {
         inputs.forEach(e => {
             e.value = "";
+        });
+        upload.forEach(item => {
+            item.previousElementSibling.textContent = "Файл не выбран";
         });
     }
 
