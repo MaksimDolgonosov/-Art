@@ -4334,6 +4334,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_mask__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/mask */ "./src/js/modules/mask.js");
 /* harmony import */ var _modules_checkTextInputs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/checkTextInputs */ "./src/js/modules/checkTextInputs.js");
 /* harmony import */ var _modules_showMoreStyles__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./modules/showMoreStyles */ "./src/js/modules/showMoreStyles.js");
+/* harmony import */ var _modules_calc__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./modules/calc */ "./src/js/modules/calc.js");
+
 
 
 
@@ -4341,15 +4343,58 @@ __webpack_require__.r(__webpack_exports__);
 
 
 window.addEventListener("DOMContentLoaded", function () {
+  var state = {};
   Object(_modules_modal__WEBPACK_IMPORTED_MODULE_0__["default"])();
   Object(_modules_sliders__WEBPACK_IMPORTED_MODULE_1__["default"])(".feedback-slider-item", "horizontal", ".main-prev-btn", ".main-next-btn");
   Object(_modules_sliders__WEBPACK_IMPORTED_MODULE_1__["default"])(".main-slider-item", "vertical");
-  Object(_modules_forms__WEBPACK_IMPORTED_MODULE_2__["default"])();
+  Object(_modules_forms__WEBPACK_IMPORTED_MODULE_2__["default"])(state);
   Object(_modules_mask__WEBPACK_IMPORTED_MODULE_3__["default"])("[name='phone']");
   Object(_modules_checkTextInputs__WEBPACK_IMPORTED_MODULE_4__["default"])("[name='name']");
   Object(_modules_checkTextInputs__WEBPACK_IMPORTED_MODULE_4__["default"])("[name='message']");
   Object(_modules_showMoreStyles__WEBPACK_IMPORTED_MODULE_5__["default"])(".button-styles", ".styles .container .row");
+  Object(_modules_calc__WEBPACK_IMPORTED_MODULE_6__["default"])(state);
 });
+
+/***/ }),
+
+/***/ "./src/js/modules/calc.js":
+/*!********************************!*\
+  !*** ./src/js/modules/calc.js ***!
+  \********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var calc = function calc(state) {
+  var size = document.querySelector("#size");
+  var material = document.querySelector("#material");
+  var options = document.querySelector("#options");
+  var promocode = document.querySelector(".promocode");
+  var result = document.querySelector(".calc-price");
+  var sum = 0;
+
+  var calcFunc = function calcFunc() {
+    sum = Math.round(+size.value * +material.value + +options.value);
+
+    if (size.value == "" || material.value == "") {
+      result.textContent = "Пожалуйста, выберите размер и материал картины";
+    } else if (promocode.value === 'IWANTPOPART') {
+      result.textContent = Math.round(sum * 0.7);
+      state.price = Math.round(sum * 0.7);
+    } else {
+      result.textContent = sum;
+      state.price = sum;
+    }
+  };
+
+  size.addEventListener("change", calcFunc);
+  material.addEventListener("change", calcFunc);
+  options.addEventListener("change", calcFunc);
+  promocode.addEventListener("input", calcFunc);
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (calc);
 
 /***/ }),
 
@@ -4427,7 +4472,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var forms = function forms() {
+var forms = function forms(state) {
   var form = document.querySelectorAll("form");
   var inputs = document.querySelectorAll("input");
   var upload = document.querySelectorAll("[name=upload]"); // const inputForms = document.querySelectorAll("input[name='user_phone']");
@@ -4486,6 +4531,11 @@ var forms = function forms() {
 
       form.parentElement.append(statusImage);
       var formData = new FormData(form);
+
+      for (var key in state) {
+        formData.append(key, state[key]);
+      }
+
       var api;
       form.closest(".popup-design") || form.classList.contains("calc_form") ? api = path.designer : api = path.question;
       Object(_services_requests__WEBPACK_IMPORTED_MODULE_8__["postData"])(api, formData).then(function (data) {
@@ -4498,6 +4548,7 @@ var forms = function forms() {
         statusImage.setAttribute("src", message.failureImage);
         console.log("Fail");
       }).finally(function () {
+        state = {};
         clearInputs();
         setTimeout(function () {
           statusMessage.remove();
@@ -4508,7 +4559,8 @@ var forms = function forms() {
           //document.body.style.overflow = "";
 
           form.classList.remove("fadeOutUp");
-          form.classList.add("fadeInUp"); // });
+          form.classList.add("fadeInUp");
+          document.querySelector(".calc-price").textContent = 'Для расчета нужно выбрать размер картины и материал картины'; // });
         }, 3000);
       });
     });

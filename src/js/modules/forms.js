@@ -1,5 +1,5 @@
 import { postData } from "../services/requests";
-const forms = () => {
+const forms = (state) => {
     const form = document.querySelectorAll("form");
     const inputs = document.querySelectorAll("input");
     const upload = document.querySelectorAll("[name=upload]");
@@ -71,6 +71,14 @@ const forms = () => {
             form.parentElement.append(statusImage);
             const formData = new FormData(form);
 
+            for (let key in state) {
+                formData.append(key, state[key]);
+            }
+            
+
+
+
+
             let api;
             form.closest(".popup-design") || form.classList.contains("calc_form") ? api = path.designer : api = path.question;
 
@@ -85,6 +93,7 @@ const forms = () => {
                     statusImage.setAttribute("src", message.failureImage);
                     console.log("Fail");
                 }).finally(() => {
+                    state = {};
 
                     clearInputs();
                     setTimeout(() => {
@@ -97,8 +106,7 @@ const forms = () => {
                         //document.body.style.overflow = "";
                         form.classList.remove("fadeOutUp");
                         form.classList.add("fadeInUp");
-
-
+                        document.querySelector(".calc-price").textContent = 'Для расчета нужно выбрать размер картины и материал картины';
                         // });
                     }, 3000);
 
