@@ -8,7 +8,7 @@ import calc from "./modules/calc";
 
 window.addEventListener("DOMContentLoaded", () => {
 
-    let state={};
+    let state = { size: "", material: "", options: "", promocode: false, totalPrice: "" };
 
     modal();
     sliders(".feedback-slider-item", "horizontal", ".main-prev-btn", ".main-next-btn");

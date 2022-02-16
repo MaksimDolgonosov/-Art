@@ -27,9 +27,6 @@ const showMoreStyles = (trigger, cards) => {
     }
 
 
-
-
-
     // cardList.forEach(card => {
     //     card.classList.add("animated", "fadeInUp");
     // });

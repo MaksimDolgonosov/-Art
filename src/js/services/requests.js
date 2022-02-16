@@ -1,8 +1,9 @@
 const postData = async (url, data) => {
-    const res = await fetch(url, {
+    let res = await fetch(url, {
         method: "POST",
         body: data
     });
+
     return await res.text();
 };
 
@@ -16,5 +17,4 @@ const getResource = async (url) => {
 
 
 
-export { postData };
-export { getResource };
+export { postData, getResource };

@@ -4343,7 +4343,13 @@ __webpack_require__.r(__webpack_exports__);
 
 
 window.addEventListener("DOMContentLoaded", function () {
-  var state = {};
+  var state = {
+    size: "",
+    material: "",
+    options: "",
+    promocode: false,
+    totalPrice: ""
+  };
   Object(_modules_modal__WEBPACK_IMPORTED_MODULE_0__["default"])();
   Object(_modules_sliders__WEBPACK_IMPORTED_MODULE_1__["default"])(".feedback-slider-item", "horizontal", ".main-prev-btn", ".main-next-btn");
   Object(_modules_sliders__WEBPACK_IMPORTED_MODULE_1__["default"])(".main-slider-item", "vertical");
@@ -4373,6 +4379,12 @@ var calc = function calc(state) {
   var promocode = document.querySelector(".promocode");
   var result = document.querySelector(".calc-price");
   var sum = 0;
+  var arrSize = {
+    "500": "40x50",
+    "1000": "50x70",
+    "1500": "70x70",
+    "2000": "70x100"
+  };
 
   var calcFunc = function calcFunc() {
     sum = Math.round(+size.value * +material.value + +options.value);
@@ -4388,10 +4400,19 @@ var calc = function calc(state) {
     }
   };
 
+  function stateValues() {
+    var key = this.value;
+    console.log(key);
+  }
+
   size.addEventListener("change", calcFunc);
   material.addEventListener("change", calcFunc);
   options.addEventListener("change", calcFunc);
   promocode.addEventListener("input", calcFunc);
+  size.addEventListener("change", stateValues);
+  material.addEventListener("change", stateValues);
+  options.addEventListener("change", stateValues);
+  promocode.addEventListener("input", stateValues);
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (calc);
@@ -4427,7 +4448,7 @@ var checkTextInputs = function checkTextInputs(selector) {
       // if (e.key.match(/[^а-яё 0-9]/gi)) {
       //     e.preventDefault();
       // };
-      textInput.value = textInput.value.replace(/[a-z 0-9]/gi, "");
+      textInput.value = textInput.value.replace(/[a-z]/gi, "");
     });
   });
 };
@@ -4548,7 +4569,13 @@ var forms = function forms(state) {
         statusImage.setAttribute("src", message.failureImage);
         console.log("Fail");
       }).finally(function () {
-        state = {};
+        var state = {
+          size: "",
+          material: "",
+          options: "",
+          promocode: false,
+          totalPrice: ""
+        };
         clearInputs();
         setTimeout(function () {
           statusMessage.remove();
@@ -4991,7 +5018,6 @@ var getResource = function getResource(url) {
     }
   });
 };
-
 
 
 

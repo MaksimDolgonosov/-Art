@@ -6,7 +6,7 @@ const checkTextInputs = (selector) => {
             // if (e.key.match(/[^а-яё 0-9]/gi)) {
             //     e.preventDefault();
             // };
-            textInput.value = textInput.value.replace(/[a-z 0-9]/gi, "");
+            textInput.value = textInput.value.replace(/[a-z]/gi, "");
         });
 
     });

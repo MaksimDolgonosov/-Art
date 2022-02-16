@@ -7,8 +7,14 @@ const calc = (state) => {
 
     let sum = 0;
 
-    const calcFunc = () => {
+    let arrSize = {
+        "500": "40x50",
+        "1000": "50x70",
+        "1500": "70x70",
+        "2000": "70x100"
+    };
 
+    const calcFunc = () => {
         sum = Math.round((+size.value) * (+material.value) + (+options.value));
         if (size.value == "" || material.value == "") {
             result.textContent = "Пожалуйста, выберите размер и материал картины";
@@ -19,17 +25,24 @@ const calc = (state) => {
         } else {
             result.textContent = sum;
             state.price = sum;
-
         }
 
     };
+
+    function stateValues() {
+        let key = this.value;
+        console.log(key);
+    }
 
     size.addEventListener("change", calcFunc);
     material.addEventListener("change", calcFunc);
     options.addEventListener("change", calcFunc);
     promocode.addEventListener("input", calcFunc);
 
-
+    size.addEventListener("change", stateValues);
+    material.addEventListener("change", stateValues);
+    options.addEventListener("change", stateValues);
+    promocode.addEventListener("input", stateValues);
 
 };
 

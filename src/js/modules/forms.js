@@ -74,10 +74,6 @@ const forms = (state) => {
             for (let key in state) {
                 formData.append(key, state[key]);
             }
-            
-
-
-
 
             let api;
             form.closest(".popup-design") || form.classList.contains("calc_form") ? api = path.designer : api = path.question;
@@ -93,7 +89,7 @@ const forms = (state) => {
                     statusImage.setAttribute("src", message.failureImage);
                     console.log("Fail");
                 }).finally(() => {
-                    state = {};
+                    let state = { size: "", material: "", options: "", promocode: false, totalPrice: "" };
 
                     clearInputs();
                     setTimeout(() => {
