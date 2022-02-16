@@ -26,7 +26,7 @@ const mask = (selector) => {
         if (def.length >= val.length) {
             val = def; // пользователь не мог удалить 7 из matrix
         }
-        console.log(val);
+
         this.value = matrix.replace(/./g, function (a) {
             if (/[_\d]/.test(a) && i < val.length) {
                 return val.charAt(i++);
@@ -36,7 +36,7 @@ const mask = (selector) => {
                 return a;
             }
         });
-        console.log(this.value);
+
 
         if (event.type == "blur") {
             if (this.value.length == 2) {
