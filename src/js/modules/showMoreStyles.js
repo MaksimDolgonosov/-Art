@@ -4,8 +4,8 @@ const showMoreStyles = (trigger, cards) => {
     const trgBtn = document.querySelector(trigger);
     const wrapper = document.querySelector(cards);
     trgBtn.addEventListener("click", function () {
-        getResource("http://localhost:3000/styles")
-            .then(data => createData(data))
+        getResource("assets/db.json") //http://localhost:3000/styles
+            .then(data => createData(data.styles)) //createData(data)
             .catch();
         this.remove();// в обработчике событий this сработает с function, со стрелочной функцией не работает
     });

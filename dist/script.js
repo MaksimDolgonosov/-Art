@@ -4736,9 +4736,11 @@ var showMoreStyles = function showMoreStyles(trigger, cards) {
   var trgBtn = document.querySelector(trigger);
   var wrapper = document.querySelector(cards);
   trgBtn.addEventListener("click", function () {
-    Object(_services_requests__WEBPACK_IMPORTED_MODULE_4__["getResource"])("http://localhost:3000/styles").then(function (data) {
-      return createData(data);
-    }).catch();
+    Object(_services_requests__WEBPACK_IMPORTED_MODULE_4__["getResource"])("assets/db.json") //http://localhost:3000/styles
+    .then(function (data) {
+      return createData(data.styles);
+    }) //createData(data)
+    .catch();
     this.remove(); // в обработчике событий this сработает с function, со стрелочной функцией не работает
   });
 
