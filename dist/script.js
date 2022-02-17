@@ -4385,6 +4385,11 @@ var calc = function calc(state) {
     "1500": "70x70",
     "2000": "70x100"
   };
+  var arrMaterial = {
+    "1": "Материал из волокна",
+    "1.2": "Льняной холст",
+    "1.5": "Холст из натурального хлопка"
+  };
 
   var calcFunc = function calcFunc() {
     sum = Math.round(+size.value * +material.value + +options.value);
@@ -4393,10 +4398,32 @@ var calc = function calc(state) {
       result.textContent = "Пожалуйста, выберите размер и материал картины";
     } else if (promocode.value === 'IWANTPOPART') {
       result.textContent = Math.round(sum * 0.7);
-      state.price = Math.round(sum * 0.7);
+      state.totalPrice = Math.round(sum * 0.7);
     } else {
       result.textContent = sum;
-      state.price = sum;
+      state.totalPrice = sum;
+    } //let key = this.value;
+
+
+    switch (size.value) {
+      case "500":
+        state.size = arrSize["500"];
+        break;
+    }
+
+    switch (material.value) {
+      case "1.2":
+        state.material = arrMaterial["1.2"];
+        break;
+    }
+
+    switch (promocode.value) {
+      case "IWANTPOPART":
+        state.promocode = true;
+        break;
+
+      default:
+        state.promocode = false;
     }
   };
 
@@ -4408,11 +4435,10 @@ var calc = function calc(state) {
   size.addEventListener("change", calcFunc);
   material.addEventListener("change", calcFunc);
   options.addEventListener("change", calcFunc);
-  promocode.addEventListener("input", calcFunc);
-  size.addEventListener("change", stateValues);
-  material.addEventListener("change", stateValues);
-  options.addEventListener("change", stateValues);
-  promocode.addEventListener("input", stateValues);
+  promocode.addEventListener("input", calcFunc); // size.addEventListener("change", stateValues);
+  // material.addEventListener("change", stateValues);
+  // options.addEventListener("change", stateValues);
+  // promocode.addEventListener("input", stateValues);
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (calc);
