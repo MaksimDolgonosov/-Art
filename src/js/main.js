@@ -5,6 +5,8 @@ import mask from "./modules/mask";
 import checkTextInputs from "./modules/checkTextInputs";
 import showMoreStyles from "./modules/showMoreStyles";
 import calc from "./modules/calc";
+import filter from "./modules/filter";
+import showpicture from "./modules/showpicture";
 
 window.addEventListener("DOMContentLoaded", () => {
 
@@ -19,4 +21,6 @@ window.addEventListener("DOMContentLoaded", () => {
     checkTextInputs("[name='message']");
     showMoreStyles(".button-styles", ".styles .container .row");
     calc(state);
+    filter();
+    showpicture();
 });
