@@ -4,12 +4,9 @@ const forms = (state) => {
     const inputs = document.querySelectorAll("input");
     const upload = document.querySelectorAll("[name=upload]");
 
-    // const inputForms = document.querySelectorAll("input[name='user_phone']");
-
-    //checkNumInputs("input[name='user_phone']");
     upload.forEach(item => {
         item.addEventListener("input", () => {
-            console.log(item.files[0]);
+            //console.log(item.files[0]);
             let dots;
             item.files[0].name.split(".")[0].length > 5 ? dots = "..." : dots = '.';
             let name = item.files[0].name.split(".")[0].substring(0, 6) + dots + item.files[0].name.split(".")[1];
@@ -71,10 +68,11 @@ const forms = (state) => {
             form.parentElement.append(statusImage);
             const formData = new FormData(form);
 
-            for (let key in state) {
-                formData.append(key, state[key]);
+            if (form.classList.contains("calc_form")) {
+                for (let key in state) {
+                    formData.append(key, state[key]);
+                }
             }
-
             let api;
             form.closest(".popup-design") || form.classList.contains("calc_form") ? api = path.designer : api = path.question;
 

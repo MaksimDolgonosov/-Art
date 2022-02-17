@@ -4645,12 +4645,10 @@ __webpack_require__.r(__webpack_exports__);
 var forms = function forms(state) {
   var form = document.querySelectorAll("form");
   var inputs = document.querySelectorAll("input");
-  var upload = document.querySelectorAll("[name=upload]"); // const inputForms = document.querySelectorAll("input[name='user_phone']");
-  //checkNumInputs("input[name='user_phone']");
-
+  var upload = document.querySelectorAll("[name=upload]");
   upload.forEach(function (item) {
     item.addEventListener("input", function () {
-      console.log(item.files[0]);
+      //console.log(item.files[0]);
       var dots;
       item.files[0].name.split(".")[0].length > 5 ? dots = "..." : dots = '.';
       var name = item.files[0].name.split(".")[0].substring(0, 6) + dots + item.files[0].name.split(".")[1];
@@ -4702,8 +4700,10 @@ var forms = function forms(state) {
       form.parentElement.append(statusImage);
       var formData = new FormData(form);
 
-      for (var key in state) {
-        formData.append(key, state[key]);
+      if (form.classList.contains("calc_form")) {
+        for (var key in state) {
+          formData.append(key, state[key]);
+        }
       }
 
       var api;
