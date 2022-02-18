@@ -7,7 +7,7 @@ import showMoreStyles from "./modules/showMoreStyles";
 import calc from "./modules/calc";
 import filter from "./modules/filter";
 import showpicture from "./modules/showpicture";
-
+import accordion from "./modules/accordion";
 window.addEventListener("DOMContentLoaded", () => {
 
     let state = { size: "", material: "", options: "", promocode: false, totalPrice: "" };
@@ -23,4 +23,5 @@ window.addEventListener("DOMContentLoaded", () => {
     calc(state);
     filter();
     showpicture();
+    accordion();
 });

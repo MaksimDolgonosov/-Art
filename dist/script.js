@@ -4394,6 +4394,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_calc__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./modules/calc */ "./src/js/modules/calc.js");
 /* harmony import */ var _modules_filter__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./modules/filter */ "./src/js/modules/filter.js");
 /* harmony import */ var _modules_showpicture__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./modules/showpicture */ "./src/js/modules/showpicture.js");
+/* harmony import */ var _modules_accordion__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./modules/accordion */ "./src/js/modules/accordion.js");
+
 
 
 
@@ -4422,7 +4424,27 @@ window.addEventListener("DOMContentLoaded", function () {
   Object(_modules_calc__WEBPACK_IMPORTED_MODULE_6__["default"])(state);
   Object(_modules_filter__WEBPACK_IMPORTED_MODULE_7__["default"])();
   Object(_modules_showpicture__WEBPACK_IMPORTED_MODULE_8__["default"])();
+  Object(_modules_accordion__WEBPACK_IMPORTED_MODULE_9__["default"])();
 });
+
+/***/ }),
+
+/***/ "./src/js/modules/accordion.js":
+/*!*************************************!*\
+  !*** ./src/js/modules/accordion.js ***!
+  \*************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var accordion = function accordion(triggerSelector) {
+  var btnTrigger = document.querySelectorAll(".accordion-heading span");
+  console.log(btnTrigger);
+  btnTrigger[0].classList.add("active-style");
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (accordion);
 
 /***/ }),
 
