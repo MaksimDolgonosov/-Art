@@ -4447,12 +4447,19 @@ __webpack_require__.r(__webpack_exports__);
 
 var accordion = function accordion(triggerSelector) {
   var btnTrigger = document.querySelectorAll(triggerSelector);
+  var blocks = document.querySelectorAll(".accordion-block");
   btnTrigger.forEach(function (e) {
     e.addEventListener("click", function () {
       if (this.classList.contains("active-style") || this.nextElementSibling.classList.contains("active-content")) {
         this.classList.remove("active-style");
         this.nextElementSibling.classList.remove("active-content"); //this.nextElementSibling.style.maxHeight = "0px";
       } else {
+        blocks.forEach(function (e) {
+          e.classList.remove("active-content");
+        });
+        btnTrigger.forEach(function (e) {
+          e.classList.remove("active-style");
+        });
         this.classList.add("active-style");
         this.nextElementSibling.classList.add("active-content"); //this.nextElementSibling.style.maxHeight = this.nextElementSibling.scrollHeight + 80 + "px";
       }
