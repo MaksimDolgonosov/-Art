@@ -23,5 +23,5 @@ window.addEventListener("DOMContentLoaded", () => {
     calc(state);
     filter();
     showpicture();
-    accordion();
+    accordion(".accordion-heading");
 });

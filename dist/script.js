@@ -4424,7 +4424,7 @@ window.addEventListener("DOMContentLoaded", function () {
   Object(_modules_calc__WEBPACK_IMPORTED_MODULE_6__["default"])(state);
   Object(_modules_filter__WEBPACK_IMPORTED_MODULE_7__["default"])();
   Object(_modules_showpicture__WEBPACK_IMPORTED_MODULE_8__["default"])();
-  Object(_modules_accordion__WEBPACK_IMPORTED_MODULE_9__["default"])();
+  Object(_modules_accordion__WEBPACK_IMPORTED_MODULE_9__["default"])(".accordion-heading");
 });
 
 /***/ }),
@@ -4438,10 +4438,26 @@ window.addEventListener("DOMContentLoaded", function () {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var core_js_modules_es_array_for_each__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/es.array.for-each */ "./node_modules/core-js/modules/es.array.for-each.js");
+/* harmony import */ var core_js_modules_es_array_for_each__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_for_each__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! core-js/modules/web.dom-collections.for-each */ "./node_modules/core-js/modules/web.dom-collections.for-each.js");
+/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_1__);
+
+
+
 var accordion = function accordion(triggerSelector) {
-  var btnTrigger = document.querySelectorAll(".accordion-heading span");
-  console.log(btnTrigger);
-  btnTrigger[0].classList.add("active-style");
+  var btnTrigger = document.querySelectorAll(triggerSelector);
+  btnTrigger.forEach(function (e) {
+    e.addEventListener("click", function () {
+      if (this.classList.contains("active-style") || this.nextElementSibling.classList.contains("active-content")) {
+        this.classList.remove("active-style");
+        this.nextElementSibling.classList.remove("active-content"); //this.nextElementSibling.style.maxHeight = "0px";
+      } else {
+        this.classList.add("active-style");
+        this.nextElementSibling.classList.add("active-content"); //this.nextElementSibling.style.maxHeight = this.nextElementSibling.scrollHeight + 80 + "px";
+      }
+    });
+  });
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (accordion);
