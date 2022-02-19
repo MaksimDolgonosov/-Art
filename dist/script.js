@@ -4396,6 +4396,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_showpicture__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./modules/showpicture */ "./src/js/modules/showpicture.js");
 /* harmony import */ var _modules_accordion__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./modules/accordion */ "./src/js/modules/accordion.js");
 /* harmony import */ var _modules_burger__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./modules/burger */ "./src/js/modules/burger.js");
+/* harmony import */ var _modules_scrolling__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./modules/scrolling */ "./src/js/modules/scrolling.js");
+
 
 
 
@@ -4428,6 +4430,7 @@ window.addEventListener("DOMContentLoaded", function () {
   Object(_modules_showpicture__WEBPACK_IMPORTED_MODULE_8__["default"])();
   Object(_modules_accordion__WEBPACK_IMPORTED_MODULE_9__["default"])(".accordion-heading");
   Object(_modules_burger__WEBPACK_IMPORTED_MODULE_10__["default"])(".burger", ".burger-menu");
+  Object(_modules_scrolling__WEBPACK_IMPORTED_MODULE_11__["default"])(".pageup");
 });
 
 /***/ }),
@@ -5011,6 +5014,45 @@ var modal = function modal() {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (modal);
+
+/***/ }),
+
+/***/ "./src/js/modules/scrolling.js":
+/*!*************************************!*\
+  !*** ./src/js/modules/scrolling.js ***!
+  \*************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var scrolling = function scrolling(upSelector) {
+  var upElem = document.querySelector(upSelector);
+  window.addEventListener("scroll", function () {
+    if (document.documentElement.scrollTop > 1650) {
+      upElem.classList.add("animated", "fadeIn");
+      upElem.classList.remove("fadeOut");
+    } else {
+      upElem.classList.add("fadeOut");
+      upElem.classList.remove("fadeIn");
+    }
+  });
+  upElem.addEventListener("click", function (e) {
+    e.preventDefault();
+    requestAnimationFrame(myAnimation); //document.documentElement.scrollTop = 1500;
+  });
+  var pos = document.documentElement.scrollTop;
+
+  function myAnimation() {
+    if (pos > 0) {
+      pos--;
+      document.documentElement.scrollTop = pos;
+      requestAnimationFrame(myAnimation);
+    }
+  }
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (scrolling);
 
 /***/ }),
 

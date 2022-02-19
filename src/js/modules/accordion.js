@@ -12,7 +12,6 @@ const accordion = (triggerSelector) => {
                 this.classList.remove("active-style");
                 this.nextElementSibling.classList.remove("active-content");
                 //this.nextElementSibling.style.maxHeight = "0px";
-
             } else {
                 blocks.forEach(e => {
                     e.classList.remove("active-content");
