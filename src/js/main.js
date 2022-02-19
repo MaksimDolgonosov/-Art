@@ -8,6 +8,7 @@ import calc from "./modules/calc";
 import filter from "./modules/filter";
 import showpicture from "./modules/showpicture";
 import accordion from "./modules/accordion";
+import burger from "./modules/burger";
 window.addEventListener("DOMContentLoaded", () => {
 
     let state = { size: "", material: "", options: "", promocode: false, totalPrice: "" };
@@ -24,4 +25,5 @@ window.addEventListener("DOMContentLoaded", () => {
     filter();
     showpicture();
     accordion(".accordion-heading");
+    burger(".burger", ".burger-menu");
 });
