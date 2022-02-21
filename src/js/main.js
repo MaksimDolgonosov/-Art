@@ -10,6 +10,7 @@ import showpicture from "./modules/showpicture";
 import accordion from "./modules/accordion";
 import burger from "./modules/burger";
 import scrolling from "./modules/scrolling";
+import drop from "./modules/drop";
 window.addEventListener("DOMContentLoaded", () => {
 
     let state = { size: "", material: "", options: "", promocode: false, totalPrice: "" };
@@ -28,4 +29,5 @@ window.addEventListener("DOMContentLoaded", () => {
     accordion(".accordion-heading");
     burger(".burger", ".burger-menu");
     scrolling(".pageup");
+    drop();
 });

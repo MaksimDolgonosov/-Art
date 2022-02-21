@@ -36,9 +36,9 @@ const scrolling = (upSelector) => {
                     }
 
                     let progress = time - start;
-                    console.log(progress);
+
                     let r = (toBlock < 0 ? Math.max(widthTop - progress / speed, widthTop + toBlock) : Math.min(widthTop + progress / speed, widthTop + toBlock));
-                    console.log(r);
+
                     document.documentElement.scrollTo(0, r);
 
                     if (r != widthTop + toBlock) {
