@@ -1,3 +1,4 @@
+import postData from "../services/requests";
 const drop = () => {
     const fileInputs = document.querySelectorAll("[name=upload]");
 
@@ -44,10 +45,35 @@ const drop = () => {
     fileInputs.forEach(input => {
         input.addEventListener("drop", e => {
             input.files = e.dataTransfer.files;
+            if (input.closest(".container")) {
+                fetch("assets/server.php", {
+                    method: "POST",
+                    body: input.files[0]
+                }).then(data => {
+                    console.log(data);
+                    input.previousElementSibling.textContent = 'Файл отправлен';
+                }).catch(() => {
+                    console.log("Fail");
+                }).finally(() => {
+                    setTimeout(() => {
+                        input.previousElementSibling.textContent = 'Файл не выбран';
+                    }, 2000);
+                });
+            }
+
             let dots;
             input.files[0].name.split(".")[0].length > 5 ? dots = "..." : dots = '.';
             let name = input.files[0].name.split(".")[0].substring(0, 6) + dots + input.files[0].name.split(".")[1];
             input.previousElementSibling.textContent = name;
+
+            // let image = input.closest(".file_upload");
+            // image.querySelector("button").style.display = "none";
+            // console.log(e.dataTransfer.files);
+            // let littleImage = document.createElement("img");
+            // littleImage.style.cssText = `float: right`;
+            // littleImage.setAttribute("src", e.target.ownerDocument.location.href);
+            // image.prepend(littleImage);
+
         });
     });
 
